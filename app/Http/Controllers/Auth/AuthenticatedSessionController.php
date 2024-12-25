@@ -44,4 +44,16 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        // Check if the user is an admin (assuming you have a method 'isAdmin' on the User model)
+        if ($user->isAdmin()) {
+            // Redirect to the admin dashboard
+            return redirect()->route('frontend.admin_dashboard');
+        }
+
+        // Default redirect for non-admin users (or to any other user page)
+        return redirect()->route('frontend.index');  // Redirect regular users to the home page
+    }
 }
